@@ -53,8 +53,8 @@
     --accent-ink:#FBF7EE;
     --line:      #E0D8C4;
 
-    --st-done:   #1F7A4E;
-    --st-due:    #9A6A0C;   /* marigold deepened for AA on paper */
+    --st-done:   #186640;   /* pine deepened — 5.9:1 chip text on done-bg */
+    --st-due:    #785400;   /* marigold deepened for AA — 5.6:1 on due-bg */
     --st-over:   #A8451F;   /* clay deepened */
     --st-up:     #566b5c;
     --st-done-bg: #E4EEE4;
@@ -78,7 +78,7 @@ html[data-theme="light"] {
   --bg:#F6F2E9; --surface:#EFE9DA; --surface-s:#ECE4D2; --card:#FBF7EE;
   --ink:#1F4A38; --muted:#3f5a4b; --rail:#C6B79A; --rail-dim:#d9cdb6; --dash:#3A3A34;
   --accent:#2E6B4F; --accent-ink:#FBF7EE; --line:#E0D8C4;
-  --st-done:#1F7A4E; --st-due:#9A6A0C; --st-over:#A8451F; --st-up:#566b5c;
+  --st-done:#186640; --st-due:#785400; --st-over:#A8451F; --st-up:#566b5c;
   --st-done-bg:#E4EEE4; --st-due-bg:#F3E8CE; --st-over-bg:#F4E1D6; --st-up-bg:#E8EBE1;
   --shadow:0 18px 40px -28px rgba(31,74,56,0.35);
 }
