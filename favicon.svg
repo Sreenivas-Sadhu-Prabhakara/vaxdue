@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="vaxdue">
+  <rect width="32" height="32" rx="7" fill="#0F231C"/>
+  <!-- birch trunk -->
+  <rect x="14.6" y="4" width="2.8" height="24" rx="1.4" fill="#C9D6C2"/>
+  <!-- lenticel dashes -->
+  <rect x="9" y="9" width="6.5" height="2.2" rx="1.1" fill="#C7CBBE"/>
+  <rect x="16.5" y="14.5" width="6.5" height="2.2" rx="1.1" fill="#C7CBBE"/>
+  <rect x="9" y="20" width="6.5" height="2.2" rx="1.1" fill="#C7CBBE"/>
+  <!-- one filled green-checked dash -->
+  <rect x="16.5" y="24.2" width="7.4" height="3" rx="1.5" fill="#7FC99A"/>
+</svg>

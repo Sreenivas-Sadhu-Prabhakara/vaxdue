@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>vaxdue — baby vaccination chart india, dated from date of birth</title>
+  <meta name="description" content="Enter your baby's date of birth and get every vaccination dated, tickable and printable — computed from the published IAP and Government NIS schedules. Private: the record never leaves your device.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/vaxdue/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="baby vaccination chart india, immunization schedule india, IAP vaccination schedule, NIS immunization schedule, vaccine due date calculator, child vaccination chart, infant immunization dates, vaccination schedule 0-2 years">
+  <meta name="theme-color" content="#0F231C" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F6F2E9" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="vaxdue">
+  <meta property="og:title" content="vaxdue — baby vaccination chart india, dated from date of birth">
+  <meta property="og:description" content="Turn a date of birth into a dated, checkable IAP & NIS vaccination schedule — due/overdue at a glance, printable for the clinic, and private by construction.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/vaxdue/">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/vaxdue/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="vaxdue — a birch-trunk vaccination timeline with dated, checkable doses">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="vaxdue — baby vaccination chart india, dated from date of birth">
+  <meta name="twitter:description" content="Turn a date of birth into a dated, checkable IAP & NIS vaccination schedule — due/overdue at a glance, printable for the clinic, and private by construction.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/vaxdue/og-image.png">
+  <meta name="twitter:image:alt" content="vaxdue — a birch-trunk vaccination timeline with dated, checkable doses">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Structured data (data block; not affected by script-src) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "vaxdue",
+    "description": "A private, offline baby vaccination chart for India that turns a date of birth into a dated, checkable IAP and Government NIS immunization schedule from birth to two years, printable for clinic visits.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/vaxdue/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Dates every dose from the baby's date of birth",
+      "IAP and Government NIS schedules kept separate",
+      "Due, overdue, upcoming and done status at a glance",
+      "Tick doses given and save per child on your device",
+      "Printable A4 clinic sheet and CSV export",
+      "Runs 100% offline — the record never leaves your browser"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does vaxdue send my baby's health record anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. vaxdue runs entirely in your browser and its Content-Security-Policy sets connect-src 'none', so the page physically cannot make a network request. Your child's name, date of birth, and ticked doses are saved only in your own browser's local storage."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between the IAP and NIS schedules?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NIS is the Government of India's National Immunization Schedule under the Universal Immunization Programme, given free at government facilities. IAP is the Indian Academy of Pediatrics' recommended schedule commonly followed in private practice, which includes some extra vaccines. vaxdue keeps them separate and never blends them; your paediatrician decides which applies to your child."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can vaxdue plan catch-up doses if we missed some vaccines?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. vaxdue marks a dose overdue once its window has passed, but it does not re-plan a missed series. Catch-up scheduling genuinely needs a doctor — take the printed sheet to your paediatrician."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is vaxdue medical advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. vaxdue is an informational reference computed from a dated snapshot of published schedules. It is not medical advice, and your paediatrician's schedule always overrides this chart."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#chart">Skip to the vaccination chart</a>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+    <div class="hero__inner">
+      <p class="eyebrow">IAP &amp; Government NIS &middot; birth to 2 years &middot; offline</p>
+      <h1 class="hero__title">Baby Vaccination Chart India — Dated IAP &amp; NIS Schedule from Your Baby's Date of Birth</h1>
+      <p class="hero__lede">
+        Enter a date of birth and vaxdue turns it into a dated, tickable, printable
+        immunization schedule&mdash;every dose shown as a real calendar date with its
+        due/overdue state at a glance. Computed on <em>your</em> device from the published
+        schedules; the record never leaves this browser.
+      </p>
+
+      <!-- ============ FIRST-RUN DISCLAIMER ============ -->
+      <div class="firstrun" id="firstrun" role="alertdialog" aria-labelledby="firstrunTitle" aria-describedby="firstrunBody" hidden>
+        <div class="firstrun__card">
+          <h2 class="firstrun__title" id="firstrunTitle">Read this first</h2>
+          <p class="firstrun__body" id="firstrunBody">
+            vaxdue is an <strong>informational reference only, not medical advice</strong>.
+            Your paediatrician's schedule always overrides this chart. Dates are computed from a
+            dated snapshot of published schedules; catch-up for missed doses is out of scope and
+            needs a doctor.
+          </p>
+          <button type="button" class="btn btn--primary" id="firstrunOk">I understand</button>
+        </div>
+      </div>
+
+      <!-- ============ CONTROLS ============ -->
+      <form class="controls" id="controls" novalidate>
+        <fieldset class="panel">
+          <legend class="panel__legend">Child</legend>
+          <div class="field">
+            <label for="childName">Child's name <span class="field__opt">(optional)</span></label>
+            <input type="text" id="childName" name="childName" maxlength="40" autocomplete="off" placeholder="e.g. Aarav">
+          </div>
+          <div class="field">
+            <label for="dob">Date of birth</label>
+            <input type="date" id="dob" name="dob" required>
+          </div>
+          <p class="panel__hint" id="ageHint" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset class="panel">
+          <legend class="panel__legend">Schedule</legend>
+          <div class="segmented" role="radiogroup" aria-label="Which schedule">
+            <label class="seg">
+              <input type="radio" name="schedule" value="IAP" checked>
+              <span>IAP (private)</span>
+            </label>
+            <label class="seg">
+              <input type="radio" name="schedule" value="NIS">
+              <span>Government NIS (free)</span>
+            </label>
+          </div>
+          <p class="panel__hint">Two separate schedules, never blended. Your paediatrician decides which applies.</p>
+        </fieldset>
+
+        <fieldset class="panel panel--wide">
+          <legend class="panel__legend">Child profiles</legend>
+          <div class="profiles" id="profiles" role="group" aria-label="Saved child profiles"></div>
+          <p class="panel__hint">Save up to 3 profiles (siblings / twins). Ticks and given-dates are stored per child, on this device only.</p>
+        </fieldset>
+      </form>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ TRUST BAR ============ -->
+    <section class="trust" id="trust" aria-label="Schedule edition and verification">
+      <div class="trust__inner">
+        <p class="trust__line" id="trustEdition"></p>
+        <p class="trust__line trust__verified" id="trustVerified"></p>
+        <p class="trust__badge" id="trustProvenance"></p>
+      </div>
+    </section>
+
+    <!-- ============ SUMMARY STRIP ============ -->
+    <section class="summary" id="summary" aria-labelledby="summaryHeading" aria-live="polite">
+      <h2 class="summary__heading" id="summaryHeading">Needs attention</h2>
+      <div class="summary__body" id="summaryBody"></div>
+    </section>
+
+    <!-- ============ ACTIONS ============ -->
+    <section class="actions">
+      <div class="actions__inner">
+        <button type="button" class="btn btn--ghost" id="printBtn">Print clinic sheet</button>
+        <button type="button" class="btn btn--ghost" id="csvBtn">Export CSV</button>
+        <button type="button" class="btn btn--ghost btn--danger" id="clearBtn">Delete this child's data</button>
+      </div>
+    </section>
+
+    <!-- ============ CHART ============ -->
+    <section class="chart" id="chart" aria-label="Dated vaccination schedule">
+      <div class="chart__printhead" id="printHead" aria-hidden="true"></div>
+      <ol class="timeline" id="timeline"></ol>
+      <p class="chart__empty" id="chartEmpty">Enter a date of birth above to generate the dated chart.</p>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="foot__inner">
+      <p class="foot__disclaimer">
+        <strong>Informational reference only &mdash; not medical advice.</strong>
+        Your paediatrician's schedule always overrides this chart. Dates are computed from a dated
+        snapshot of published schedules (edition and verified-on date shown above); schedules get
+        revised, so confirm current recommendations at your clinic. Catch-up for missed or delayed
+        doses is out of scope&mdash;the chart flags a dose overdue but a doctor must plan the catch-up.
+        Some doses are conditional (e.g. JE in endemic districts); vaxdue flags the condition but cannot
+        decide it for your child. The official immunization card remains the record of truth.
+      </p>
+      <p class="foot__meta">
+        <span>Works 100% offline</span><span class="foot__dot">&middot;</span>
+        <span>No network, no accounts &mdash; the record never leaves your device</span><span class="foot__dot">&middot;</span>
+        <span>MIT&nbsp;License</span><span class="foot__dot">&middot;</span>
+        <span>&copy; 2026 Sreenivas&nbsp;Sadhu&nbsp;Prabhakara</span>
+      </p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="data/schedule.js" defer></script>
+  <script src="data/engine.js" defer></script>
+  <script src="data/csv.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

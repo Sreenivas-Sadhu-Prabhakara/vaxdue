@@ -1,0 +1,395 @@
+/* ============================================================
+   vaxdue — birch & pine. The birch-trunk vaccination timeline.
+   Dark default (deep pine forest) + light (birch paper).
+   All text/badge pairings verified for WCAG-AA in both schemes.
+   ============================================================ */
+
+:root {
+  /* dark (default) — deep pine forest */
+  --bg:        #0F231C;
+  --surface:   #16302650;
+  --surface-s: #183328;
+  --card:      #1B3B2E;
+  --ink:       #EFE9DC;   /* pale birch — ~13:1 on --bg */
+  --muted:     #A9C2B3;   /* ~7:1 on --bg */
+  --rail:      #C9D6C2;   /* pale-birch trunk */
+  --rail-dim:  #46604f;
+  --dash:      #C7CBBE;   /* lenticel charcoal, lifted for dark */
+  --accent:    #6FA98C;   /* spruce-mist */
+  --accent-ink:#0F231C;
+  --line:      #2C4A3B;
+
+  /* status hues — lifted for dark contrast; each also has an icon/text label */
+  --st-done:   #7FC99A;
+  --st-due:    #E8B94E;   /* marigold */
+  --st-over:   #E8845C;   /* clay */
+  --st-up:     #9BB0A2;   /* grey-green */
+  --st-done-bg: #16362450;
+  --st-due-bg:  #3a300f;
+  --st-over-bg: #3a2016;
+  --st-up-bg:   #22332a;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Helvetica, Arial, sans-serif;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --wrap: 1080px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --shadow: 0 18px 44px -26px rgba(0,0,0,0.75);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:        #F6F2E9;   /* birch paper */
+    --surface:   #EFE9DA;
+    --surface-s: #ECE4D2;
+    --card:      #FBF7EE;
+    --ink:       #1F4A38;   /* deep pine — ~8:1 on paper */
+    --muted:     #3f5a4b;   /* ~6:1 on paper */
+    --rail:      #C6B79A;   /* birch bark */
+    --rail-dim:  #d9cdb6;
+    --dash:      #3A3A34;   /* lenticel charcoal */
+    --accent:    #2E6B4F;   /* spruce */
+    --accent-ink:#FBF7EE;
+    --line:      #E0D8C4;
+
+    --st-done:   #1F7A4E;
+    --st-due:    #9A6A0C;   /* marigold deepened for AA on paper */
+    --st-over:   #A8451F;   /* clay deepened */
+    --st-up:     #566b5c;
+    --st-done-bg: #E4EEE4;
+    --st-due-bg:  #F3E8CE;
+    --st-over-bg: #F4E1D6;
+    --st-up-bg:   #E8EBE1;
+    --shadow: 0 18px 40px -28px rgba(31,74,56,0.35);
+  }
+}
+
+/* manual override flips a data attribute on <html> */
+html[data-theme="dark"] {
+  --bg:#0F231C; --surface:#16302650; --surface-s:#183328; --card:#1B3B2E;
+  --ink:#EFE9DC; --muted:#A9C2B3; --rail:#C9D6C2; --rail-dim:#46604f; --dash:#C7CBBE;
+  --accent:#6FA98C; --accent-ink:#0F231C; --line:#2C4A3B;
+  --st-done:#7FC99A; --st-due:#E8B94E; --st-over:#E8845C; --st-up:#9BB0A2;
+  --st-done-bg:#16362450; --st-due-bg:#3a300f; --st-over-bg:#3a2016; --st-up-bg:#22332a;
+  --shadow:0 18px 44px -26px rgba(0,0,0,0.75);
+}
+html[data-theme="light"] {
+  --bg:#F6F2E9; --surface:#EFE9DA; --surface-s:#ECE4D2; --card:#FBF7EE;
+  --ink:#1F4A38; --muted:#3f5a4b; --rail:#C6B79A; --rail-dim:#d9cdb6; --dash:#3A3A34;
+  --accent:#2E6B4F; --accent-ink:#FBF7EE; --line:#E0D8C4;
+  --st-done:#1F7A4E; --st-due:#9A6A0C; --st-over:#A8451F; --st-up:#566b5c;
+  --st-done-bg:#E4EEE4; --st-due-bg:#F3E8CE; --st-over-bg:#F4E1D6; --st-up-bg:#E8EBE1;
+  --shadow:0 18px 40px -28px rgba(31,74,56,0.35);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: -0.003em;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; }
+p { margin: 0; }
+em { font-style: normal; font-weight: 600; }
+
+.skip-link {
+  position: absolute; left: 12px; top: -60px;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 10px 16px; border-radius: 10px; font-weight: 700;
+  z-index: 50; transition: top 0.18s var(--ease); text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+a:focus-visible, button:focus-visible, input:focus-visible,
+.seg:focus-within {
+  outline: 3px solid var(--st-due);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.eyebrow {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--muted); font-weight: 600;
+}
+
+/* ============================================================ HERO */
+.hero {
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(1100px 520px at 82% -12%, rgba(111,169,140,0.10), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 88%, black) 0%, var(--bg) 100%);
+}
+@media (prefers-color-scheme: light) {
+  .hero { background: radial-gradient(1000px 480px at 84% -10%, rgba(46,107,79,0.08), transparent 60%), var(--bg); }
+}
+.hero__inner { max-width: var(--wrap); margin: 0 auto; padding: 46px 22px 34px; }
+.hero__title {
+  font-size: clamp(1.7rem, 4.4vw, 2.6rem);
+  font-weight: 800; letter-spacing: -0.025em; margin: 12px 0 14px; max-width: 22ch;
+}
+.hero__lede { color: var(--muted); font-size: 1.06rem; max-width: 58ch; }
+
+/* ============================================================ FIRST-RUN */
+.firstrun {
+  margin-top: 22px;
+  border: 1px solid var(--st-due);
+  background: var(--st-due-bg);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.firstrun__title { font-size: 1.05rem; color: var(--ink); margin-bottom: 6px; }
+.firstrun__body { color: var(--ink); font-size: 0.96rem; margin-bottom: 14px; }
+
+/* ============================================================ CONTROLS */
+.controls {
+  margin-top: 26px;
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.panel {
+  border: 1px solid var(--line);
+  background: var(--surface-s);
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+  margin: 0; min-inline-size: 0;
+}
+.panel--wide { grid-column: 1 / -1; }
+.panel__legend { font-weight: 700; font-size: 0.92rem; padding: 0 6px; color: var(--ink); }
+.panel__hint { margin-top: 10px; font-size: 0.82rem; color: var(--muted); }
+
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.field:last-of-type { margin-bottom: 0; }
+.field label { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+.field__opt { font-weight: 400; color: var(--muted); }
+input[type="text"], input[type="date"] {
+  font-family: var(--sans); font-size: 1rem;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card); color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+input::placeholder { color: var(--muted); opacity: 0.8; }
+
+.segmented { display: flex; gap: 8px; flex-wrap: wrap; }
+.seg { position: relative; flex: 1 1 auto; }
+.seg input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.seg span {
+  display: block; text-align: center; padding: 11px 12px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--muted); font-weight: 600; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.15s var(--ease);
+}
+.seg input:checked + span {
+  background: var(--accent); color: var(--accent-ink);
+  border-color: var(--accent); font-weight: 700;
+}
+
+/* profiles */
+.profiles { display: flex; gap: 8px; flex-wrap: wrap; }
+.profile {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 10px 8px 12px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--card); color: var(--ink); font-size: 0.88rem; font-weight: 600;
+}
+.profile--active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.profile button {
+  border: none; background: transparent; color: var(--muted);
+  font: inherit; cursor: pointer; padding: 0 2px;
+}
+.profile__pick { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+.profile__x { font-size: 1.05rem; line-height: 1; }
+.profile__x:hover { color: var(--st-over); }
+.profile--add { border-style: dashed; color: var(--muted); cursor: pointer; }
+
+/* ============================================================ BUTTONS */
+.btn {
+  font-family: var(--sans); font-size: 0.92rem; font-weight: 700;
+  padding: 11px 18px; border-radius: var(--radius-sm);
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform 0.08s var(--ease), background 0.15s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--accent); color: var(--accent-ink); }
+.btn--ghost { background: var(--card); color: var(--ink); border-color: var(--line); }
+.btn--danger { color: var(--st-over); border-color: color-mix(in srgb, var(--st-over) 45%, var(--line)); }
+
+/* ============================================================ TRUST BAR */
+.trust {
+  max-width: var(--wrap); margin: 22px auto 0; padding: 0 22px;
+}
+.trust__inner {
+  border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  background: var(--surface-s); border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.trust__line { font-size: 0.86rem; color: var(--ink); }
+.trust__verified { color: var(--muted); margin-top: 3px; }
+.trust__badge {
+  margin-top: 8px; display: inline-block;
+  font-size: 0.76rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  background: var(--st-due-bg); color: var(--st-due);
+  border: 1px solid color-mix(in srgb, var(--st-due) 40%, transparent);
+}
+.trust__badge--verified { background: var(--st-done-bg); color: var(--st-done);
+  border-color: color-mix(in srgb, var(--st-done) 40%, transparent); }
+
+/* ============================================================ SUMMARY */
+.summary { max-width: var(--wrap); margin: 20px auto 0; padding: 0 22px; }
+.summary__heading { font-size: 1rem; margin-bottom: 10px; }
+.summary__body { display: flex; flex-direction: column; gap: 8px; }
+.summary__row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+.summary__row--overdue { background: var(--st-over-bg); border-color: color-mix(in srgb, var(--st-over) 40%, var(--line)); }
+.summary__row--due { background: var(--st-due-bg); border-color: color-mix(in srgb, var(--st-due) 40%, var(--line)); }
+.summary__vac { font-weight: 700; }
+.summary__meta { color: var(--muted); font-size: 0.86rem; }
+.summary__none { color: var(--muted); font-size: 0.9rem; }
+
+/* ============================================================ ACTIONS */
+.actions { max-width: var(--wrap); margin: 18px auto 0; padding: 0 22px; }
+.actions__inner { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ============================================================ CHART / TIMELINE */
+.chart { max-width: var(--wrap); margin: 22px auto 60px; padding: 0 22px; }
+.chart__empty { color: var(--muted); padding: 30px 0; }
+.chart__printhead { display: none; }
+
+.timeline {
+  list-style: none; margin: 0; padding: 0;
+  position: relative;
+}
+/* the birch trunk rail */
+.timeline::before {
+  content: ""; position: absolute;
+  left: 18px; top: 6px; bottom: 6px; width: 4px;
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, var(--rail), var(--rail-dim));
+}
+
+.dose {
+  position: relative;
+  padding: 12px 12px 12px 52px;
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+/* lenticel dash tick on the trunk */
+.dose::before {
+  content: ""; position: absolute;
+  left: 8px; top: 22px; width: 24px; height: 5px;
+  border-radius: 2px;
+  background: var(--dash);
+  box-shadow: 0 0 0 3px var(--bg);
+}
+.dose--done::before { background: var(--st-done); }
+
+.dose__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.dose__vaccine { font-weight: 700; font-size: 1.02rem; }
+.dose__label { color: var(--muted); font-size: 0.86rem; }
+.dose__date {
+  margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: 0.98rem;
+}
+.dose__window { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+.dose__cond {
+  margin-top: 8px; font-size: 0.82rem; color: var(--ink);
+  padding: 7px 10px; border-radius: var(--radius-sm);
+  background: var(--st-due-bg);
+  border: 1px solid color-mix(in srgb, var(--st-due) 30%, transparent);
+}
+.dose__cond b { color: var(--st-due); }
+.dose__note { margin-top: 6px; color: var(--muted); font-size: 0.82rem; }
+.dose__cite { color: var(--muted); font-size: 0.76rem; margin-top: 4px; }
+
+.dose__foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+
+/* status chip — never colour-only: has a glyph + a text label */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid;
+}
+.chip__glyph { font-weight: 900; }
+.chip--done { color: var(--st-done); background: var(--st-done-bg); border-color: color-mix(in srgb, var(--st-done) 45%, transparent); }
+.chip--due  { color: var(--st-due);  background: var(--st-due-bg);  border-color: color-mix(in srgb, var(--st-due) 45%, transparent); }
+.chip--overdue { color: var(--st-over); background: var(--st-over-bg); border-color: color-mix(in srgb, var(--st-over) 45%, transparent); }
+.chip--upcoming { color: var(--st-up); background: var(--st-up-bg); border-color: color-mix(in srgb, var(--st-up) 45%, transparent); }
+
+.give { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.give input { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; }
+.give span { font-size: 0.86rem; font-weight: 600; }
+.given-date {
+  font-family: var(--sans); font-size: 0.84rem; padding: 5px 8px;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--card); color: var(--ink);
+}
+
+/* ============================================================ TOAST */
+.toast {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+  background: var(--accent); color: var(--accent-ink);
+  padding: 12px 18px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
+  box-shadow: var(--shadow); z-index: 60;
+}
+
+/* ============================================================ FOOTER */
+.foot { border-top: 1px solid var(--line); background: var(--surface-s); }
+.foot__inner { max-width: var(--wrap); margin: 0 auto; padding: 26px 22px 40px; }
+.foot__disclaimer { color: var(--ink); font-size: 0.88rem; max-width: 78ch; }
+.foot__disclaimer strong { color: var(--st-over); }
+.foot__meta { margin-top: 14px; color: var(--muted); font-size: 0.8rem; }
+.foot__dot { margin: 0 8px; }
+
+/* ============================================================ MOTION */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ============================================================ PRINT — A4 clinic sheet */
+@media print {
+  :root {
+    --bg:#fff; --card:#fff; --ink:#000; --muted:#333; --line:#999;
+    --rail:#000; --rail-dim:#000; --dash:#000; --accent:#000; --accent-ink:#fff;
+    --st-done:#000; --st-due:#000; --st-over:#000; --st-up:#000;
+    --st-done-bg:#fff; --st-due-bg:#fff; --st-over-bg:#fff; --st-up-bg:#fff;
+  }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .hero, .controls, .actions, .summary__none, .toast, .skip-link, .firstrun,
+  .profile__x, .profile--add { display: none !important; }
+  .hero__inner { padding: 0; }
+  .trust, .summary, .chart { max-width: none; margin: 0; padding: 0; }
+  .chart__printhead {
+    display: block; margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid #000;
+  }
+  .chart__printhead h2 { font-size: 15pt; }
+  .chart__printhead p { font-size: 10pt; }
+  .timeline::before { background: #000; }
+  .dose {
+    break-inside: avoid; border: 1px solid #000; box-shadow: none;
+    margin: 5px 0; padding: 8px 8px 8px 46px;
+  }
+  .dose::before { box-shadow: 0 0 0 2px #fff; }
+  .chip { border: 1px solid #000 !important; color: #000 !important; background: #fff !important; }
+  .give input { -webkit-appearance: none; appearance: none;
+    width: 15px; height: 15px; border: 1.5px solid #000; }
+  .foot { border-top: 1px solid #000; }
+  .foot__meta { display: none; }
+}

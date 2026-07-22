@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0F231C; }
+  body { display: grid; place-items: center; }
+  /* 12% safe padding -> mark fills the middle 76vmin */
+  .mark { width: 76vmin; height: 76vmin; display: block; }
+</style>
+</head>
+<body>
+  <!-- cropped birch-trunk segment: rail + lenticel dashes, one green-checked -->
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+    <rect x="14.6" y="1" width="2.8" height="30" rx="1.4" fill="#C9D6C2"/>
+    <rect x="7.5" y="7" width="7" height="2.6" rx="1.3" fill="#C7CBBE"/>
+    <rect x="17.5" y="13.5" width="7" height="2.6" rx="1.3" fill="#C7CBBE"/>
+    <rect x="7.5" y="20" width="7" height="2.6" rx="1.3" fill="#C7CBBE"/>
+    <!-- the green-checked dash -->
+    <rect x="17.5" y="25.4" width="8.2" height="3.4" rx="1.7" fill="#7FC99A"/>
+    <path d="M18.7 27.1l1 1 1.9-2" fill="none" stroke="#0F231C" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</body>
+</html>
